@@ -3,6 +3,7 @@ package app.todo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
@@ -51,12 +52,25 @@ public class TodoController {
 		return mv;
 	}
 
+	@GetMapping("/getinfo")
+	public @ResponseBody  Optional<Todo> getinfo(@RequestParam long id) {
+	//	ModelAndView mv = new ModelAndView("welcome");
+		
+		
+		//mv.addObject("message", todo);
+		// model.addAttribute("message", "Hello and welcome to ProjectTodo");
+		return repository.findById(id);
+	}
+	
+	
 	@PostMapping("/add")
 	public @ResponseBody String addTodoApi(@RequestParam String text) {
 		Todo todo = new Todo(text);
 		repository.save(todo);
 		return "Stored Todo";
 	}
+	
+	
 
 //	    @RequestMapping("/test")
 // 	    public String addItem(@ModelAttribute Todo inTodo) {
@@ -73,6 +87,14 @@ public class TodoController {
 		return repository.findAll();
 	}
 	
+	@GetMapping(path = "/totalNumber")
+	public @ResponseBody long getNumberTodos() {
+		// This returns a JSON or XML with the users
+		
+		return repository.count();
+	}
+	
+	
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
 	
 	@GetMapping(path = "/active2")
@@ -81,7 +103,7 @@ public class TodoController {
 		//buildModel(model, todos);
 		//model.addAttribute("filter","Active");
 		
-		return repository.findByCompleted(true);
+		return repository.findByCompleted(false);
 	//	repository.findAll();
 	// Iterable<Todo> todos=repository.findCompleted(false);
 	//		 buildModel(model,todos);

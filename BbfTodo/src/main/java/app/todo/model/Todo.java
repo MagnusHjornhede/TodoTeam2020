@@ -18,23 +18,29 @@ public class Todo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
-  private Integer id;
+  private Long id;
 
   @Column(name = "text", nullable = false, length = 128)
   private String text;
 
   @Column(name = "completed", nullable = false)
-  private boolean complete;
+  private boolean completed;
 
   public Todo() {
   }
 
   public Todo(String text) {
     this.text = text;
-    this.complete = false;
+    this.completed = false;
   }
 
-  public Integer getId() {
+public Todo(String text, boolean completed) {
+	this.text= text;
+	this.completed= completed;
+}
+
+  
+  public Long getId() {
     return id;
   }
 
@@ -43,10 +49,10 @@ public class Todo {
   }
 
   public boolean getCompletedStatus() {
-    return complete;
+    return completed;
   }
 
-  @Override
+  @Override // Delete?
   public boolean equals(Object object) {
     if (this == object) return true;
     if (object == null || getClass() != object.getClass()) return false;

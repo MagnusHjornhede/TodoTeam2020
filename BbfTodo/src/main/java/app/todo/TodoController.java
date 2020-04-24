@@ -16,13 +16,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,15 +55,15 @@ public class TodoController {
 		return mv;
 	}
 
-	@GetMapping("/getinfo")
+	@GetMapping("/toggle")
 	public @ResponseBody  Optional<Todo> getinfo(@RequestParam long id) {
 	//	ModelAndView mv = new ModelAndView("welcome");
-		
-		
 		//mv.addObject("message", todo);
 		// model.addAttribute("message", "Hello and welcome to ProjectTodo");
 		return repository.findById(id);
 	}
+	
+	
 	
 	
 	@PostMapping("/add")
@@ -70,16 +73,23 @@ public class TodoController {
 		return "Stored Todo";
 	}
 	
+	@PostMapping("/")
+	public String createNewTodo(Todo todo)
+	{
+		repository.save(todo);
+		return "redirect:/";
+	}
 	
+	 @DeleteMapping(value = "/posts/{id}")
+	    public ResponseEntity<Long> deletePost(@PathVariable Long id) {
 
-//	    @RequestMapping("/test")
-// 	    public String addItem(@ModelAttribute Todo inTodo) {
-// 	    	Todo todo = new Todo(inTodo.getText());
-// 	    	repository.save(todo);
-// 	    	
-// 	    	return "index";
-// 	    }
+	     // var   isRemoved = repository.deleteById(id);
 
+	     //   if (!isRemoved) {
+	          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        }
+
+	
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Todo> getAllData() {
 		// This returns a JSON or XML with the users
@@ -90,32 +100,24 @@ public class TodoController {
 	@GetMapping(path = "/totalNumber")
 	public @ResponseBody long getNumberTodos() {
 		// This returns a JSON or XML with the users
-		
 		return repository.count();
 	}
 	
 	
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
+
+	@GetMapping(path = "/active")
+	public @ResponseBody Iterable<Todo> getAllActive(Model model) {
+	return repository.findByCompleted(false);
+}
 	
-	@GetMapping(path = "/active2")
-	public @ResponseBody Iterable<Todo>   getAllActive(Model model) {
-		//Iterable<Todo> todos= repository.findByCompleted(false);
-		//buildModel(model, todos);
-		//model.addAttribute("filter","Active");
-		
-		return repository.findByCompleted(false);
-	//	repository.findAll();
-	// Iterable<Todo> todos=repository.findCompleted(false);
-	//		 buildModel(model,todos);
-		
-		
-//		Iterable<String> list = () -> StreamSupport.stream(raw.spliterator(), false)
-//		        .filter(text -> !text.isEmpty())
-//		        .iterator();
-//		
-		
-	}
+	@GetMapping(path = "/done")
+	public @ResponseBody Iterable<Todo> getAllDone(Model model) {
+	return repository.findByCompleted(true);
+}
 	
+	
+
 	  @RequestMapping("/")
 	    public String index3(Model model) {
 	      //  ArrayList<TodoItem> todoList = (ArrayList<TodoItem>) repository.findAll();
@@ -125,39 +127,7 @@ public class TodoController {
 	        return "index3";
 	    }
 	
-	//	private void buildModel(Model model, Iterable<Todo> todos) {
-	//		model.addAttribute("todos", todos);
-		//	int countCompleted = repository
-			
-		//	model.addAttribute("countCompleted", countCompleted);
-		//	int countActive = repository.countCompleted(false);
-		//	model.addAttribute("countActive", countActive);
-		//	boolean allComplete = (countActive == 0);
-		//	model.addAttribute("allComplete", allComplete);
-	//	}
-	
-	
-//	    @PostMapping("/addTodo")
-//	    public String addTodo(ModelMap model , @Valid Todo todo, BindingResult result) {
-//	      if(result.hasErrors()) {
-//	    	  return "/all";
-//	      }
-//	      repository.sa
-//	    }
 
-//	    public void saveInstructor(Instructor instructor) {
-//			//Transaction transaction = null;
-//			Session session = HibernateUtil.getSessionFactory().openSession()) {
-//				// start a transaction
-//			//	transaction = session.beginTransaction();
-//				// save the student object
-//				session.save(instructor);
-//				// commit transaction
-//			//	transaction.commit();
-//			
-//				e.printStackTrace();
-//			}
-//		}
 
 //	    @GetMapping("/api/messages")
 //	    @ResponseBody

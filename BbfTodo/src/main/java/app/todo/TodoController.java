@@ -55,79 +55,70 @@ public class TodoController {
 		return mv;
 	}
 
-	@GetMapping("/toggle")
-	public @ResponseBody  Optional<Todo> getinfo(@RequestParam long id) {
-	//	ModelAndView mv = new ModelAndView("welcome");
-		//mv.addObject("message", todo);
+	@GetMapping("/getinfo")
+	public @ResponseBody Optional<Todo> getinfo(@RequestParam long id) {
+		// ModelAndView mv = new ModelAndView("welcome");
+		// mv.addObject("message", todo);
 		// model.addAttribute("message", "Hello and welcome to ProjectTodo");
 		return repository.findById(id);
 	}
 	
-	
-	
-	
+	@DeleteMapping("/deletepost")
+	public String deletePost(@RequestParam long id) {
+	repository.deleteById(id);	
+		return "deleted";
+	}
+
 	@PostMapping("/add")
 	public @ResponseBody String addTodoApi(@RequestParam String text) {
 		Todo todo = new Todo(text);
 		repository.save(todo);
 		return "Stored Todo";
 	}
+
+	
 	
 	@PostMapping("/")
-	public String createNewTodo(Todo todo)
-	{
+	public String createNewTodo(Todo todo) {
 		repository.save(todo);
 		return "redirect:/";
 	}
-	
-	 @DeleteMapping(value = "/posts/{id}")
-	    public ResponseEntity<Long> deletePost(@PathVariable Long id) {
-
-	     // var   isRemoved = repository.deleteById(id);
-
-	     //   if (!isRemoved) {
-	          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	        }
 
 	
+
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Todo> getAllData() {
 		// This returns a JSON or XML with the users
-		
+
 		return repository.findAll();
 	}
-	
+
 	@GetMapping(path = "/totalNumber")
 	public @ResponseBody long getNumberTodos() {
 		// This returns a JSON or XML with the users
 		return repository.count();
 	}
-	
-	
+
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
 
 	@GetMapping(path = "/active")
 	public @ResponseBody Iterable<Todo> getAllActive(Model model) {
-	return repository.findByCompleted(false);
-}
-	
+		return repository.findByCompleted(false);
+	}
+
 	@GetMapping(path = "/done")
 	public @ResponseBody Iterable<Todo> getAllDone(Model model) {
-	return repository.findByCompleted(true);
-}
-	
-	
+		return repository.findByCompleted(true);
+	}
 
-	  @RequestMapping("/")
-	    public String index3(Model model) {
-	      //  ArrayList<TodoItem> todoList = (ArrayList<TodoItem>) repository.findAll();
-	        //model.addAttribute("items", todoList);
-	       // model.addAttribute("newitem", new TodoItem());
-	      //  model.addAttribute("items", new TodoListViewModel(todoList));
-	        return "index3";
-	    }
-	
-
+	@RequestMapping("/")
+	public String index3(Model model) {
+		// ArrayList<TodoItem> todoList = (ArrayList<TodoItem>) repository.findAll();
+		// model.addAttribute("items", todoList);
+		// model.addAttribute("newitem", new TodoItem());
+		// model.addAttribute("items", new TodoListViewModel(todoList));
+		return "index3";
+	}
 
 //	    @GetMapping("/api/messages")
 //	    @ResponseBody

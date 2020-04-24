@@ -1,8 +1,5 @@
 package app.todo.config;
-
-//package app.messages.config;
-
-
+/*
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +10,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import app.todo.web.AuditingFilter;  
 import javax.sql.DataSource;
 import java.util.Arrays;
-
+*/
+/*
 @Configuration
 @ComponentScan("app.todo") // fix this , base package
 @EnableTransactionManagement
@@ -52,5 +50,5 @@ public class AppConfig {
   }
 
 }
-
+*/
 

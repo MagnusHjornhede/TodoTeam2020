@@ -70,6 +70,9 @@ public class TodoController {
 		return "deleted";
 	}
 
+	
+	
+	
 	@PostMapping("/add")
 	public @ResponseBody String addTodoApi(@RequestParam String text) {
 		Todo todo = new Todo(text);
@@ -90,7 +93,6 @@ public class TodoController {
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Todo> getAllData() {
 		// This returns a JSON or XML with the users
-
 		return repository.findAll();
 	}
 
@@ -121,39 +123,55 @@ public class TodoController {
 		return "index3";
 	}
 
+//	int ecounter = StreamSupport.stream(elements.spliterator(), false).count();
+//	for (Object i : elements) {
+//	    ecounter++;
+//	}
+//	
+//	int ccounter = 0;
+//	for (Object i : elementsCompleted) {
+//	    ccounter++;
+//	}
+//	@DeleteMapping("/deletepost")
+//	public String deletePost(@RequestParam long id) {
+//	repository.deleteById(id);	
+//		return "deleted";
+//	}
+	@RequestMapping("/toggleone")
+	public String toggleOneElement(@RequestParam long id) {
+		 Todo todo = repository.findById(id).orElse(null);
+ 
+		boolean completed = todo.getCompletedStatus();
+		   todo.setCompletedStatus(!completed);
+		repository.save(todo);
+	
+		return"Inverting todo status";
+	}
+	
 	
 	//@RequestMapping
-	@GetMapping("/toggle")
+	@GetMapping("/toggleAll")
 	public String toggleAllElements() {
 		Iterable<Todo> elements= repository.findAll();
 		Iterable<Todo> elementsCompleted= repository.findByCompleted(true);
-		
-		
-		 
-
-		
-//		int ecounter = StreamSupport.stream(elements.spliterator(), false).count();
-//		for (Object i : elements) {
-//		    ecounter++;
-//		}
-//		
-//		int ccounter = 0;
-//		for (Object i : elementsCompleted) {
-//		    ccounter++;
-//		}
-		
-		if(StreamSupport.stream(elements.spliterator(), false).count()== StreamSupport.stream(elements.spliterator(), false).count()) {
-			
-			return "IfTesting";
+		// If all are completed then set all active
+		if(StreamSupport.stream(elements.spliterator(), false).count()== StreamSupport.stream(elementsCompleted.spliterator(), false).count()) {
+			{
+				for(Todo element:elements) {
+				//boolean completed = element.getCompletedStatus();
+				element.setCompletedStatus(false);
+				repository.save(element);
+			}}
+			return "Setting false";
 		}
-		
+		else
 		for(Todo element:elements) {
-			boolean completed = element.getCompletedStatus();
-			element.setCompletedStatus(!completed);
+			//boolean completed = element.getCompletedStatus();
+			element.setCompletedStatus(true);
 			repository.save(element);
 		}
 		//return "redirect:/";
-		return"Inverted";
+		return"Setting true";
 	}
 	
 //	    @GetMapping("/api/messages")
@@ -164,3 +182,23 @@ public class TodoController {
 //	    }
 
 }
+//}
+//Iterable<Todo> elements= repository.findAll();
+//Iterable<Todo> elementsCompleted= repository.findByCompleted(true);
+// If all are completed then set all active
+//if(StreamSupport.stream(elements.spliterator(), false).count()== StreamSupport.stream(elementsCompleted.spliterator(), false).count()) {
+//	{
+//		for(Todo element:elements) {
+//		//boolean completed = element.getCompletedStatus();
+//		element.setCompletedStatus(false);
+//		repository.save(element);
+//	}}
+//	return "Setting false";
+//}
+//else
+//for(Todo element:elements) {
+//	//boolean completed = element.getCompletedStatus();
+//	element.setCompletedStatus(true);
+//	repository.save(element);
+//}
+//return "redirect:/";

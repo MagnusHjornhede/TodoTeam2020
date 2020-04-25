@@ -5,6 +5,7 @@ package app.todo;
 //import java.util.List;
 import java.util.Optional;
 //import java.util.stream.StreamSupport;
+import java.util.stream.StreamSupport;
 
 //import javax.validation.Valid;
 
@@ -120,6 +121,41 @@ public class TodoController {
 		return "index3";
 	}
 
+	
+	//@RequestMapping
+	@GetMapping("/toggle")
+	public String toggleAllElements() {
+		Iterable<Todo> elements= repository.findAll();
+		Iterable<Todo> elementsCompleted= repository.findByCompleted(true);
+		
+		
+		 
+
+		
+//		int ecounter = StreamSupport.stream(elements.spliterator(), false).count();
+//		for (Object i : elements) {
+//		    ecounter++;
+//		}
+//		
+//		int ccounter = 0;
+//		for (Object i : elementsCompleted) {
+//		    ccounter++;
+//		}
+		
+		if(StreamSupport.stream(elements.spliterator(), false).count()== StreamSupport.stream(elements.spliterator(), false).count()) {
+			
+			return "IfTesting";
+		}
+		
+		for(Todo element:elements) {
+			boolean completed = element.getCompletedStatus();
+			element.setCompletedStatus(!completed);
+			repository.save(element);
+		}
+		//return "redirect:/";
+		return"Inverted";
+	}
+	
 //	    @GetMapping("/api/messages")
 //	    @ResponseBody
 //	    public ResponseEntity<List<Todo>> getMessages() {

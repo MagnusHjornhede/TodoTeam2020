@@ -64,6 +64,11 @@ public Todo(String text, boolean completed) {
   public int hashCode() {
     return Objects.hash(id);
   }
+
+public void setCompletedStatus(boolean b) {
+	 this.completed= b;
+	
+}
 }
 
 	

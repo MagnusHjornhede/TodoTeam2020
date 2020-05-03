@@ -40,7 +40,11 @@ public Todo(String text, boolean completed) {
 }
 
   
-  public Long getId() {
+  public void setId(Long id) {
+	this.id = id;
+}
+
+public Long getId() {
     return id;
   }
 
@@ -48,7 +52,11 @@ public Todo(String text, boolean completed) {
     return text;
   }
 
-  public boolean getCompletedStatus() {
+  public void setText(String text) {
+	this.text = text;
+}
+
+public boolean getCompletedStatus() {
     return completed;
   }
 

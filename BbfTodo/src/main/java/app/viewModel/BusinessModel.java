@@ -22,6 +22,8 @@ public class BusinessModel {
 			this.todoList = todoList;
 		}
 	
+		
+		
 //		public Iterable<Todo> getCompletedStatus(boolean completed){
 //			 return completed;
 //		}

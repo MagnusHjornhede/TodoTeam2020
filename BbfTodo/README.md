@@ -1,5 +1,14 @@
 Projektet
+
 Inledning
+
+Använd Postman eller liknade för att jobba mot api. 
+TodoController innehåller flertalet metoder för att jobba mot MySql servern.
+@Config används inte för det enda som @autowire är ett interface som extendar CrudRepository
+@Transaction används ej
+
+
+
 
 Kursens projekt bygger på projektet från front-end kursen. Ni får gärna jobba i grupp,
 men tänk då på att det ska gå att tydligt se i GitHub vem som gjort vad, genom att man

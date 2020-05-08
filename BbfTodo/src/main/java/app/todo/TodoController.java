@@ -1,6 +1,5 @@
 package app.todo;
 
-
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
- 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.todo.model.Todo;
 import app.todo.repository.*;
  
-
 @Controller
 @RequestMapping("/api")
 public class TodoController {
@@ -37,6 +34,7 @@ public class TodoController {
 		mv.addObject("message", "Todo API, use Postman to execute the commands");
 		return mv;
 	}
+	
 	/**
 	 * Method that returns number of "active" todos
 	 * @return
@@ -55,6 +53,7 @@ public class TodoController {
 	public @ResponseBody Optional<Todo> getinfo(@RequestParam long id) {
 		return repository.findById(id);
 	}
+	
 /**
  * Updating a specific todo and all it's attributes
  * @param id
@@ -83,6 +82,7 @@ public class TodoController {
 		repository.deleteById(id);
 		return "Post deleted";
 	}
+	
 /**
  * Adding one todo to the repository.
  * @param text
@@ -95,8 +95,8 @@ public class TodoController {
 		return "Added todo";
 	}
 /**
- * Dumping the entire repository as json.
- * @return
+ * Dumping the entire repository with .findAll() .
+ * @return   All entities.
  */
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Todo> getAllDaata() {
@@ -104,8 +104,8 @@ public class TodoController {
 		return repository.findAll();
 	}
 /**
- * Returning the numbers of todos in repository
- * @return
+ * Returning the numbers of todos in repository with count().
+ * @return int 
  */
 	@GetMapping(path = "/totalnumber")
 	public @ResponseBody long getNumberTodos() {
@@ -117,9 +117,9 @@ public class TodoController {
 //  Important info about spring jpa
 //	https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
 /**
- * Returns all active todos in repository
- * @param model
- * @return
+ * Returns all active todos in repository with findByCompleted(false) as iterable.
+ * @param model  (optional)
+ * @return Iterable<Todo> 
  */
 	@GetMapping(path = "/active")
 	public @ResponseBody Iterable<Todo> getAllActive(Model model) {
@@ -128,8 +128,8 @@ public class TodoController {
 
 /**
  * Returns completed todos in repository.
- * @param model
- * @return
+ * @param model  (optional)
+ * @return Iterable<Todo>
  */
 	@GetMapping(path = "/done")
 	public @ResponseBody Iterable<Todo> getAllDone(Model model) {
@@ -137,8 +137,9 @@ public class TodoController {
 	}
 /**
  * Toggles active/done on one todo in repository.
- * @param id
- * @return
+ * It reads current boolean completed status of the todo and inverts it.  
+ * @param id  id of the element to be modified.
+ * @return String  confirmation message.
  */
 	@RequestMapping("/toggleone")
 	public @ResponseBody String toggleOneElement(@RequestParam long id) {
@@ -155,6 +156,13 @@ public class TodoController {
 
 	/**
 	 * Toggles all todos done/active.
+	 * Reading all elements from repository as iterable and reads all elements 
+	 * that are completed in another iterable list.
+	 * These iterables are compared to find out if the entire list is already
+	 * completed or not. If not all elements are completed then the list must 
+	 * toggle completed property as completed. Other case is that the entire list is already 
+	 * is set as completed and then set that as false for every element.
+	 * 
 	 * @return string confirmation
 	 */
 	@GetMapping("/toggleall")
@@ -184,7 +192,7 @@ public class TodoController {
 
 }
 
-
+// Ignore this
 //@RequestMapping("/update")
 //public @ResponseBody String updateThisThing(@ModelAttribute BusinessModel todos) {
 //	for (Todo todo : todos.getTodoList()) {

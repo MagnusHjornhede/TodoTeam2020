@@ -10,11 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+// Building up database tables with it's entities.
 @Entity
 @Table(name = "todos")
 public class Todo {
-
+// Unique id and automatic increment
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)

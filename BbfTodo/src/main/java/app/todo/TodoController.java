@@ -35,15 +35,15 @@ public class TodoController {
 		return mv;
 	}
 	
-	/**
-	 * Method that returns number of "active" todos
-	 * @return
-	 */
-	@GetMapping("/activetodos")
-	 private int activeNumbers() {
-	       return repository.countByCompleted(false);
-	    }
-	
+//	/**
+//	 * Method that returns number of "active" todos
+//	 * @return
+//	 */
+//	@GetMapping("/activetodos")
+//	 private int activeNumbers() {
+//	       return repository.countByCompleted(false);
+//	    }
+//	
 	/**
 	 * Method that check the repository for a specific id
 	 * @param id

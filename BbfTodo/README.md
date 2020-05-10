@@ -4,8 +4,8 @@ Inledning
 
 Använd Postman eller liknade för att jobba mot api. 
 TodoController innehåller flertalet metoder för att jobba mot MySql servern.
-@Config används inte för det enda som @autowire är ett interface som extendar CrudRepository
-@Transaction används ej
+Vi fick inte @Config i app config att fungera för det är ett interface som extendar CrudRepository.
+
 
 
 

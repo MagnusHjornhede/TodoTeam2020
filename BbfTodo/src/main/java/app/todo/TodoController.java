@@ -35,15 +35,7 @@ public class TodoController {
 		return mv;
 	}
 	
-//	/**
-//	 * Method that returns number of "active" todos
-//	 * @return
-//	 */
-//	@GetMapping("/activetodos")
-//	 private int activeNumbers() {
-//	       return repository.countByCompleted(false);
-//	    }
-//	
+
 	/**
 	 * Method that check the repository for a specific id
 	 * @param id
@@ -192,23 +184,3 @@ public class TodoController {
 
 }
 
-// Ignore this
-//@RequestMapping("/update")
-//public @ResponseBody String updateThisThing(@ModelAttribute BusinessModel todos) {
-//	for (Todo todo : todos.getTodoList()) {
-//		Todo element = new Todo(todo.getText());
-//		element.setId(todo.getId());
-//		element.setCompletedStatus(todo.getCompletedStatus());
-//		repository.save(element);
-//	}
-//	return "Updated todo";
-//}
-
-//@GetMapping("/")
-//public String mainer(Model model) {
-//	ArrayList<Todo> todoList = (ArrayList<Todo>) repository.findAll();
-//	model.addAttribute("NotDoneTodos", activeNumbers());
-//	model.addAttribute("newItem", new Todo());
-//	model.addAttribute("items", new BusinessModel(todoList));
-//	return "index"; // Hmmm change to "todos" --- clean up
-//}

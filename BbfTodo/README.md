@@ -1,29 +1,21 @@
-Projektet
+Todo Back-end.
 
 Inledning
+Simpelt API för TodoMVC-operationer. Se nedan för API
 
-Använd Postman eller liknade för att jobba mot api. 
-TodoController innehåller flertalet metoder för att jobba mot MySql servern.
-Vi fick inte @Config i app config att fungera för det är ett interface som extendar CrudRepository.
-
+TodoController innehåller flertalet metoder för att jobba mot MySql servern. Använder sig av Crud hibernate interface för dess vanliga grundläggande funktioner mot databaser. Dess interface "extends" i TodoRepositoryImpl för att få utökad funktionalitet för vissa queries.
 
 
+		Use Postman to access the api, or a browser.
 
-
-Kursens projekt bygger på projektet från front-end kursen. Ni får gärna jobba i grupp,
-men tänk då på att det ska gå att tydligt se i GitHub vem som gjort vad, genom att man
-kan se från vems konto kommiten är gjord.
-Det som ska göras är att ta fram en back-end till er mvcTODO. Till den ska ni använda
-Spring som ramverk och en MySQL databas för att spara data. Databasen ska bygga på
-den modellen ni tog fram i inlämningsuppgiften, eventuella avsteg från den ska motiveras.
-För att kommunicera med front-end delen ska ni använda ett RESTful API. Om ni väljer
-att göra front-end delen med vue.js, ren JS och HTML spelar ingen roll, då detta inte ingår
-i kursen. Koden ska vara väl dokumenterad och lätt att läsa.
-Redovisning sker via GitHub, motiveringar till de olika val ni gjort skriver ni i readme.md
-i projektets rotkatalog.
-
-Bedömning
-Godkänt (G):
-En fungerande back-end som går att anropa via ett RESTful API i t.ex. Postman. Samt
-någon form av kommunikation med den underliggande databasen. Att det går att följa
-arbetet med projektet via flera kommits som gjorts under arbetets gång.
+		Show all elements   http://localhost:8080/api/all
+		Delete element      http://localhost:8080/api/deletepost - (@RequestParam long id)
+		Add element         http://localhost:8080/api/add - (@RequestParam String text)
+		Show total number   http://localhost:8080/api/totalnumber
+		Show active         http://localhost:8080/api/active
+		Show done           http://localhost:8080/api/done
+		Toggle todo         http://localhost:8080/api/toggleone - (@RequestParam long id)
+		Toggle all todo     http://localhost:8080/api/toggleall - flyttat viss logik utanför
+    Toggle all todo     http://localhost:8080/api/toggleallv2 - En modifierad variant men utför samma sak.
+		Update an element   http://localhost:8080/api/update2 (@RequestParam long id, @RequestParam String text,@RequestParam boolean completed)
+		

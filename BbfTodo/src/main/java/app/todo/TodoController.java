@@ -43,7 +43,7 @@ public class TodoController {
 	 */
 	@GetMapping("/getinfogson")
 	@ResponseBody
-	public  Optional<Todo> getinfo(@RequestParam long id) {
+	public Optional<Todo> getinfo(@RequestParam long id) {
 		return repository.findById(id);
 	}
 
@@ -55,9 +55,9 @@ public class TodoController {
 	 * @param completed
 	 * @return
 	 */
-	@RequestMapping("/update")@ResponseBody
-	public String updateSingleTodo(@RequestParam long id, @RequestParam String text,
-			@RequestParam boolean completed) {
+	@RequestMapping("/update")
+	@ResponseBody
+	public String updateSingleTodo(@RequestParam long id, @RequestParam String text, @RequestParam boolean completed) {
 		Todo todo = repository.findById(id).orElse(null);
 		todo.setText(text);
 		todo.setCompletedStatus(completed);
@@ -73,7 +73,7 @@ public class TodoController {
 	 */
 	@DeleteMapping("/deletepost")
 	@ResponseBody
-	public  String methodDelete(@RequestParam long id) {
+	public String methodDelete(@RequestParam long id) {
 
 		repository.deleteById(id);
 		return "Post deleted";
@@ -87,7 +87,7 @@ public class TodoController {
 	 */
 	@PostMapping("/add")
 	@ResponseBody
-	public  String addTodoApi(@RequestParam String text) {
+	public String addTodoApi(@RequestParam String text) {
 		Todo todo = new Todo(text);
 		repository.save(todo);
 		return "Added todo";
@@ -100,7 +100,7 @@ public class TodoController {
 	 */
 	@GetMapping(path = "/all")
 	@ResponseBody
-	public  Iterable<Todo> getAllDaata() {
+	public Iterable<Todo> getAllDaata() {
 		// This returns a JSON or XML with the users
 		return repository.findAll();
 	}
@@ -129,7 +129,7 @@ public class TodoController {
 	 */
 	@GetMapping(path = "/active")
 	@ResponseBody
-	public  Iterable<Todo> getAllActive(Model model) {
+	public Iterable<Todo> getAllActive(Model model) {
 		return repository.findByCompleted(false);
 	}
 
@@ -141,7 +141,7 @@ public class TodoController {
 	 */
 	@GetMapping(path = "/done")
 	@ResponseBody
-	public  Iterable<Todo> getAllDone(Model model) {
+	public Iterable<Todo> getAllDone(Model model) {
 		return repository.findByCompleted(true);
 	}
 
@@ -154,7 +154,7 @@ public class TodoController {
 	 */
 	@RequestMapping("/toggleone")
 	@ResponseBody
-	public  String toggleOneElement(@RequestParam long id) {
+	public String toggleOneElement(@RequestParam long id) {
 		// Getting specific element by Id
 		Todo todo = repository.findById(id).orElse(null);
 		// Inverting the boolean value
@@ -175,61 +175,17 @@ public class TodoController {
 	 * already is set as completed and then set that as false for every element.
 	 * 
 	 * @return string confirmation
+	 * @throws Exception - null exception
 	 */
+	@SuppressWarnings("null")
 	@GetMapping("/toggleall")
 	@ResponseBody
-	public String toggleAllElements() {
-		Iterable<Todo> elements = repository.findAll();
-		Iterable<Todo> elementsCompleted = repository.findByCompleted(true);
-		// If all are completed then set all active
-		if (extracted(elements, elementsCompleted)) {
-			{
-				for (Todo element : elements) {
-					// boolean completed = element.getCompletedStatus();
-					element.setCompletedStatus(false);
-					repository.save(element);
-				}
-			}
-			return "Setting all false";
-		} else
-			for (Todo element : elements) {
-				// Setting all to true
-				element.setCompletedStatus(true);
-				repository.save(element);
-			}
+	public String toggleAllElements() throws Exception {
+		// Moved Logic to another class called Logic.java
+		Logic logic = new Logic();
 
-		return "Setting all true";
+		return logic.extractedRequest(repository);
 	}
 
-	private boolean extracted(Iterable<Todo> elements, Iterable<Todo> elementsCompleted) {
-		return StreamSupport.stream(elements.spliterator(), false).count() == StreamSupport
-				.stream(elementsCompleted.spliterator(), false).count();
-	}
-
-	
-	/**
-	 * Adding another version of toggle all
-	 * @return String 
-	 */
-	@GetMapping("/toggleallv2")
-	@ResponseBody
-	public String toggleAllElementsV2() {
-		Iterable<Todo> elements = repository.findAll();
-		Iterable<Todo> elementsCompleted = repository.findByCompleted(true);
-		// If all are completed then set all active
-		if (elements.equals(elementsCompleted)) {
-			for (Todo element : elements) {
-				// boolean completed = element.getCompletedStatus();
-				element.setCompletedStatus(false);
-				repository.save(element);
-			}
-		} else {
-			for (Todo element : elements) {
-				// Setting all to true
-				element.setCompletedStatus(true);
-				repository.save(element);
-			}
-		}
-		return "Setting all true";
-	}
+ 
 }

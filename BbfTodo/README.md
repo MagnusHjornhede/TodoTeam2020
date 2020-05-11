@@ -16,6 +16,5 @@ TodoController innehåller flertalet metoder för att jobba mot MySql servern. A
 		Show done           http://localhost:8080/api/done
 		Toggle todo         http://localhost:8080/api/toggleone - (@RequestParam long id)
 		Toggle all todo     http://localhost:8080/api/toggleall - flyttat viss logik utanför
-    Toggle all todo     http://localhost:8080/api/toggleallv2 - En modifierad variant men utför samma sak.
 		Update an element   http://localhost:8080/api/update2 (@RequestParam long id, @RequestParam String text,@RequestParam boolean completed)
 		

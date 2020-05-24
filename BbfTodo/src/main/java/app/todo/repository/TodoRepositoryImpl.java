@@ -10,7 +10,6 @@ public interface TodoRepositoryImpl extends CrudRepository<Todo, Long> {
 	int countByCompleted(boolean completed);
 	// Finding all completed todos
 	Iterable<Todo> findByCompleted(boolean completed);
-	//}
 	
 }
 
